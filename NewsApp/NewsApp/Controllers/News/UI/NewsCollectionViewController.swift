@@ -8,10 +8,11 @@
 import UIKit
 import Combine
 
-private let reuseIdentifier = "Cell"
 
-class NewsCollectionViewController: UICollectionViewController {
+class NewsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
+    private let reuseIdentifier = "newsCell"
+    
     private var activityIndicator = UIActivityIndicatorView(style: .large)
     
     private let newsViewModel = NewsViewModel()
@@ -29,14 +30,14 @@ class NewsCollectionViewController: UICollectionViewController {
         newsViewModel.$news
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
-                print(items)
+                self?.collectionView.reloadData()
             }
             .store(in: &subscriptions)
         
     }
     
     private func setupUI(){
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
@@ -74,19 +75,29 @@ extension NewsCollectionViewController{
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return newsViewModel.news.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
+        
+        let article = newsViewModel.news[indexPath.row]
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! NewsCollectionViewCell
+        cell.titleLabel.text = article.title
+        cell.messageLabel.text = article.articleDescription
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: UIScreen.main.bounds.width, height: 100)
     }
     
 }
