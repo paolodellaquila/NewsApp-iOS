@@ -8,6 +8,6 @@
 enum Constants {
     enum API {
         static let baseUrl = "https://newsapi.org/v2/"
-        static let apiKey = "** INSERT HERE YOUR NEWS KEY " //https://newsapi.org/
+        static let apiKey = "" // ** INSERT HERE YOUR NEWS KEY ** //https://newsapi.org/
     }
 }

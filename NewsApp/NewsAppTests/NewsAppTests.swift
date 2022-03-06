@@ -12,7 +12,7 @@ class NewsAppTests: XCTestCase {
     
     func check_if_newsapi_token_is_set(){
         
-        let checkContains = Constants.API.apiKey.contains("*")
+        let checkContains = Constants.API.apiKey.isEmpty
         
         XCTAssertFalse(checkContains)
     }

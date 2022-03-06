@@ -36,6 +36,13 @@ extension NewsApi: TargetType {
     var task: Task {
         switch self {
         case .recentNews(let country, let category):
+            
+            //check token
+            if(Constants.API.apiKey.isEmpty){
+                //insert news api token into Constant file
+                fatalError()
+            }
+            
             return .requestParameters(parameters: ["country" : country, "category" : category, "api_key": Constants.API.apiKey], encoding: URLEncoding.queryString)
         }
     }
