@@ -8,13 +8,16 @@
 import Foundation
 
 
-struct HandledError{
+struct HandledError: Codable{
     
-    var statusCode: Int
-    var description: String
+    let status, code, message: String
     
     public func readableMessage() -> String {
-        return "Status code: \(statusCode) \n \(description)"
+        if(!code.isEmpty){
+            return "Status code: \(code) \n \(message)"
+        }else{
+            return message
+        }
     }
     
 }

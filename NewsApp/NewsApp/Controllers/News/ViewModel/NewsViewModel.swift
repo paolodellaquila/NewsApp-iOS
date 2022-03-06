@@ -40,17 +40,31 @@ extension NewsViewModel{
                 
                 guard case let .failure(error) = completion else { return }
                 
-                self?.errorState.send(HandledError(statusCode: 500, description: error.localizedDescription))
+                self?.errorState.send(HandledError(status: "Error", code: String(error.errorCode), message: error.errorDescription ?? ""))
                 self?.loadingState.send(false)
             
             }, receiveValue: { [weak self] results in
                 
                 self?.loadingState.send(false)
                 
-                do {
-                    self?.news = try JSONDecoder().decode([Article].self, from: results.data)
-                } catch {
-                    self?.errorState.send(HandledError(statusCode: results.statusCode, description: error.localizedDescription))
+                if(results.statusCode == 200){
+                    
+                    if let newsResponse = try? JSONDecoder().decode(ArticleResponse.self, from: results.data){
+                        self?.news = newsResponse.articles
+                        
+                    }else{
+                        self?.errorState.send(HandledError(status: "Error", code: "", message: "Unable to parse News Json"))
+                    }
+                    
+                }else{
+                    
+                    if let handledError = try? JSONDecoder().decode(HandledError.self, from: results.data) {
+                        self?.errorState.send(handledError)
+                        
+                    }else{
+                        self?.errorState.send(HandledError(status: "Error", code: String(results.statusCode), message: "Network Error"))
+                    }
+                    
                 }
                 
             })

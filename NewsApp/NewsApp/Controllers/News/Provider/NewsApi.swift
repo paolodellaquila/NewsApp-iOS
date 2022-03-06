@@ -43,7 +43,7 @@ extension NewsApi: TargetType {
                 fatalError()
             }
             
-            return .requestParameters(parameters: ["country" : country, "category" : category, "api_key": Constants.API.apiKey], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["country" : country, "category" : category, "apiKey": Constants.API.apiKey], encoding: URLEncoding.queryString)
         }
     }
     
