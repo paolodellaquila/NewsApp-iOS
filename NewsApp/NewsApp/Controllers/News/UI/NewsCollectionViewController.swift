@@ -9,9 +9,8 @@ import UIKit
 import Combine
 
 
-class NewsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
-    private let reuseIdentifier = "newsCell"
+class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDelegate {
+    
     
     private var activityIndicator = UIActivityIndicatorView(style: .large)
     
@@ -37,7 +36,16 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     private func setupUI(){
-        collectionView!.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .systemBackground
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
+        
+        let mosaicLayout = TRMosaicLayout()
+        collectionView.setCollectionViewLayout(mosaicLayout, animated: true)
+        mosaicLayout.delegate = self
+        
+        collectionView.register(UINib(nibName: CollectionUtility.cellUIName, bundle: nil), forCellWithReuseIdentifier: CollectionUtility.reuseID)
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
@@ -71,7 +79,7 @@ class NewsCollectionViewController: UICollectionViewController, UICollectionView
  
 
 //MARK: Manage collection view
-extension NewsCollectionViewController{
+extension NewsCollectionViewController: UICollectionViewDelegateFlowLayout{
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -86,18 +94,41 @@ extension NewsCollectionViewController{
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let article = newsViewModel.news[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionUtility.reuseID, for: indexPath) as! NewsCollectionViewCell
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! NewsCollectionViewCell
-        cell.titleLabel.text = article.title
-        cell.messageLabel.text = article.articleDescription
+        let article = newsViewModel.news[indexPath.row]
+        cell.setupCell(article.title, article.urlToImage)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: UIScreen.main.bounds.width, height: 100)
+        return CGSize(width: 200, height: 150)
+        
     }
     
+}
+
+extension NewsCollectionViewController {
+    
+    func collectionView(_ collectionView:UICollectionView, mosaicCellSizeTypeAtIndexPath indexPath:IndexPath) -> TRMosaicCellType {
+        return indexPath.item % 3 == 0 ? TRMosaicCellType.big : TRMosaicCellType.small
+    }
+    
+    func collectionView(_ collectionView:UICollectionView, layout collectionViewLayout: TRMosaicLayout, insetAtSection:Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+    }
+    
+    func heightForSmallMosaicCell() -> CGFloat {
+        return 150
+    }
+}
+
+
+private enum CollectionUtility {
+    static let spacing: CGFloat = 16
+    static let borderWidth: CGFloat = 0.5
+    static let cellUIName = "NewsCollectionViewCell"
+    static let reuseID = "newsCell"
 }

@@ -44,7 +44,7 @@ extension NewsViewModel{
                 self?.loadingState.send(false)
             
             }, receiveValue: { [weak self] results in
-                
+            
                 self?.loadingState.send(false)
                 
                 if(results.statusCode == 200){

@@ -17,33 +17,34 @@
                 <rect key="frame" x="0.0" y="0.0" width="252" height="103"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xit-0D-nHV">
-                        <rect key="frame" x="16" y="9" width="48" height="24"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWV-Co-ZcQ">
-                        <rect key="frame" x="16" y="38" width="40" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <nil key="textColor"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dak-Pn-AXa">
+                        <rect key="frame" x="0.0" y="0.0" width="252" height="103"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xit-0D-nHV">
+                        <rect key="frame" x="0.0" y="81.5" width="252" height="21.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="Xit-0D-nHV" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="16" id="crP-XV-zVf"/>
-                <constraint firstItem="RWV-Co-ZcQ" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="16" id="gM5-2F-1Dh"/>
-                <constraint firstItem="RWV-Co-ZcQ" firstAttribute="top" secondItem="Xit-0D-nHV" secondAttribute="bottom" constant="5" id="idV-mk-hUf"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="top" secondItem="Xit-0D-nHV" secondAttribute="top" constant="35" id="sld-GV-uWv"/>
+                <constraint firstAttribute="trailing" secondItem="Xit-0D-nHV" secondAttribute="trailing" id="0b4-80-JrU"/>
+                <constraint firstAttribute="trailing" secondItem="Dak-Pn-AXa" secondAttribute="trailing" id="7fj-wz-rtC"/>
+                <constraint firstItem="Dak-Pn-AXa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8Py-vf-Klw"/>
+                <constraint firstItem="Xit-0D-nHV" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="AEP-je-oxa"/>
+                <constraint firstAttribute="bottom" secondItem="Dak-Pn-AXa" secondAttribute="bottom" id="DIL-VQ-tj2"/>
+                <constraint firstAttribute="bottom" secondItem="Xit-0D-nHV" secondAttribute="bottom" id="Pgq-rf-2uB"/>
+                <constraint firstItem="Xit-0D-nHV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Qde-uo-Awv"/>
+                <constraint firstItem="Dak-Pn-AXa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gh4-c5-hyt"/>
             </constraints>
             <size key="customSize" width="252" height="103"/>
             <connections>
-                <outlet property="messageLabel" destination="RWV-Co-ZcQ" id="lwY-li-PUT"/>
+                <outlet property="coverImage" destination="Dak-Pn-AXa" id="rLL-dC-idp"/>
                 <outlet property="titleLabel" destination="Xit-0D-nHV" id="cYw-qT-dr1"/>
             </connections>
-            <point key="canvasLocation" x="284.05797101449275" y="102.79017857142857"/>
+            <point key="canvasLocation" x="282.60869565217394" y="102.79017857142857"/>
         </collectionViewCell>
     </objects>
 </document>

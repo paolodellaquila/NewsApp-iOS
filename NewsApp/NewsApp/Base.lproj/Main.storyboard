@@ -12,9 +12,18 @@
         <scene sceneID="mnL-Zu-Xsf">
             <objects>
                 <navigationController id="sxn-RP-l7x" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iIS-2w-hw2">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="iIS-2w-hw2">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <connections>
                         <segue destination="0Vs-15-wXA" kind="relationship" relationship="rootViewController" id="M6K-0D-iNL"/>
@@ -24,7 +33,7 @@
             </objects>
             <point key="canvasLocation" x="-958" y="70"/>
         </scene>
-        <!--News Collection View Controller-->
+        <!--News-->
         <scene sceneID="Zks-1T-lBX">
             <objects>
                 <collectionViewController id="0Vs-15-wXA" customClass="NewsCollectionViewController" customModule="NewsApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +41,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Tka-hb-ETe">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Tka-hb-ETe">
                             <size key="itemSize" width="396" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -44,7 +53,7 @@
                             <outlet property="delegate" destination="0Vs-15-wXA" id="wk6-x0-rrS"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="NUo-qF-uMb"/>
+                    <navigationItem key="navigationItem" title="News" id="NUo-qF-uMb"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wmM-o2-WeH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
