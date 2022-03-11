@@ -75,9 +75,9 @@ extension NewsCollectionViewController{
     private func setupNavigationBar() {
         //- navigationbar
         let barAppearance = UINavigationBarAppearance()
-        barAppearance.backgroundColor = .black
-        barAppearance.largeTitleTextAttributes = [.foregroundColor : UIColor.white]
-        barAppearance.titleTextAttributes = [.foregroundColor : UIColor.white]
+        barAppearance.backgroundColor = .systemBackground
+        barAppearance.largeTitleTextAttributes = [.foregroundColor : UIColor.secondaryLabel]
+        barAppearance.titleTextAttributes = [.foregroundColor : UIColor.secondaryLabel]
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
@@ -87,7 +87,7 @@ extension NewsCollectionViewController{
         //- collectionview
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .systemBackground
         
         let mosaicLayout = TRMosaicLayout()
         collectionView.setCollectionViewLayout(mosaicLayout, animated: true)
@@ -153,7 +153,7 @@ extension NewsCollectionViewController {
     }
     
     func collectionView(_ collectionView:UICollectionView, layout collectionViewLayout: TRMosaicLayout, insetAtSection:Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        return UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
     }
     
     func heightForSmallMosaicCell() -> CGFloat {
@@ -163,8 +163,6 @@ extension NewsCollectionViewController {
 
 
 private enum CollectionUtility {
-    static let spacing: CGFloat = 24
-    static let borderWidth: CGFloat = 1
     static let cellUIName = "NewsCollectionViewCell"
     static let reuseID = "newsCell"
 }

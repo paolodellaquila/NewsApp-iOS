@@ -19,9 +19,9 @@ class NewsCollectionViewCell: UICollectionViewCell {
     }
     
     fileprivate func setTitle(_ title: String) {
-        let index = title.index(title.startIndex, offsetBy: 30)
-        let titleSub = title[..<index]
-        titleLabel.text = String(titleSub)
+        titleLabel.text = title
+        
+        titleLabel.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
     }
     
     fileprivate func setCover(_ imageUrl: String?) {
@@ -36,6 +36,7 @@ class NewsCollectionViewCell: UICollectionViewCell {
         coverImage.contentMode = .scaleAspectFill
         coverImage.layer.cornerRadius = coverImage.frame.width/12.0
         coverImage.layer.masksToBounds = true
+
     }
     
     func setupCell(_ title: String, _ imageUrl: String?){
