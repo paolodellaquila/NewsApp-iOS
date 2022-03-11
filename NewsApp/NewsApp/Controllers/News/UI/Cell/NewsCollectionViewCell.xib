@@ -18,11 +18,11 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dak-Pn-AXa">
-                        <rect key="frame" x="0.0" y="0.0" width="252" height="103"/>
+                        <rect key="frame" x="0.0" y="0.0" width="252" height="79"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xit-0D-nHV">
-                        <rect key="frame" x="0.0" y="81.5" width="252" height="21.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                        <rect key="frame" x="0.0" y="79" width="51.5" height="24"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -30,14 +30,12 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Xit-0D-nHV" secondAttribute="trailing" id="0b4-80-JrU"/>
                 <constraint firstAttribute="trailing" secondItem="Dak-Pn-AXa" secondAttribute="trailing" id="7fj-wz-rtC"/>
                 <constraint firstItem="Dak-Pn-AXa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8Py-vf-Klw"/>
-                <constraint firstItem="Xit-0D-nHV" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="AEP-je-oxa"/>
-                <constraint firstAttribute="bottom" secondItem="Dak-Pn-AXa" secondAttribute="bottom" id="DIL-VQ-tj2"/>
-                <constraint firstAttribute="bottom" secondItem="Xit-0D-nHV" secondAttribute="bottom" id="Pgq-rf-2uB"/>
-                <constraint firstItem="Xit-0D-nHV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Qde-uo-Awv"/>
+                <constraint firstAttribute="bottom" secondItem="Xit-0D-nHV" secondAttribute="bottom" id="KSP-TX-dQ8"/>
+                <constraint firstItem="Xit-0D-nHV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="YWK-Qo-N6d"/>
                 <constraint firstItem="Dak-Pn-AXa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gh4-c5-hyt"/>
+                <constraint firstItem="Xit-0D-nHV" firstAttribute="top" secondItem="Dak-Pn-AXa" secondAttribute="bottom" id="th8-KQ-kTY"/>
             </constraints>
             <size key="customSize" width="252" height="103"/>
             <connections>

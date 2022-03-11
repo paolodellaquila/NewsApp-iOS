@@ -34,23 +34,15 @@ class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDe
             .store(in: &subscriptions)
         
     }
+
     
     private func setupUI(){
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = .systemBackground
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 56, right: 0)
         
-        let mosaicLayout = TRMosaicLayout()
-        collectionView.setCollectionViewLayout(mosaicLayout, animated: true)
-        mosaicLayout.delegate = self
+        setupNavigationBar()
         
-        collectionView.register(UINib(nibName: CollectionUtility.cellUIName, bundle: nil), forCellWithReuseIdentifier: CollectionUtility.reuseID)
+        setupCollectionView()
         
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activityIndicator)
-        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        setupActivityIndicator()
 
     }
     
@@ -77,6 +69,43 @@ class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDe
     
 }
  
+//MARK: Manage Ui
+extension NewsCollectionViewController{
+    
+    private func setupNavigationBar() {
+        //- navigationbar
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.backgroundColor = .black
+        barAppearance.largeTitleTextAttributes = [.foregroundColor : UIColor.white]
+        barAppearance.titleTextAttributes = [.foregroundColor : UIColor.white]
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
+    }
+    
+    private func setupCollectionView() {
+        //- collectionview
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .black
+        
+        let mosaicLayout = TRMosaicLayout()
+        collectionView.setCollectionViewLayout(mosaicLayout, animated: true)
+        mosaicLayout.delegate = self
+        
+        collectionView.register(UINib(nibName: CollectionUtility.cellUIName, bundle: nil), forCellWithReuseIdentifier: CollectionUtility.reuseID)
+    }
+    
+    private func setupActivityIndicator() {
+        //- activity indicator
+        activityIndicator.color = .white
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+}
 
 //MARK: Manage collection view
 extension NewsCollectionViewController: UICollectionViewDelegateFlowLayout{
@@ -108,6 +137,13 @@ extension NewsCollectionViewController: UICollectionViewDelegateFlowLayout{
         
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let article = newsViewModel.news[indexPath.row]
+        if let url = URL(string: article.url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
 }
 
 extension NewsCollectionViewController {
@@ -117,7 +153,7 @@ extension NewsCollectionViewController {
     }
     
     func collectionView(_ collectionView:UICollectionView, layout collectionViewLayout: TRMosaicLayout, insetAtSection:Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
     
     func heightForSmallMosaicCell() -> CGFloat {
@@ -127,8 +163,8 @@ extension NewsCollectionViewController {
 
 
 private enum CollectionUtility {
-    static let spacing: CGFloat = 16
-    static let borderWidth: CGFloat = 0.5
+    static let spacing: CGFloat = 24
+    static let borderWidth: CGFloat = 1
     static let cellUIName = "NewsCollectionViewCell"
     static let reuseID = "newsCell"
 }
