@@ -34,7 +34,6 @@ class NewsCollectionViewCell: UICollectionViewCell {
         }
         
         coverImage.contentMode = .scaleAspectFill
-        coverImage.layer.cornerRadius = coverImage.frame.width/12.0
         coverImage.layer.masksToBounds = true
 
     }

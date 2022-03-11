@@ -13,6 +13,7 @@ class NewsViewModel {
     
     //MARK: Observables properties
     @Published var news: [Article] = []
+    @Published var filteredNews: [Article] = []
     var cancellable: AnyCancellable?
 
     //MARK: - Providers

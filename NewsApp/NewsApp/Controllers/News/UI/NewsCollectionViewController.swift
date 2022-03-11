@@ -13,6 +13,14 @@ class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDe
     
     
     private var activityIndicator = UIActivityIndicatorView(style: .large)
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    private var isSearchBarEmpty: Bool {
+      return searchController.searchBar.text?.isEmpty ?? true
+    }
+    private var isFiltering: Bool {
+      return searchController.isActive && !isSearchBarEmpty
+    }
     
     private let newsViewModel = NewsViewModel()
     
@@ -29,7 +37,10 @@ class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDe
         newsViewModel.$news
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
-                self?.collectionView.reloadData()
+                
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             }
             .store(in: &subscriptions)
         
@@ -43,6 +54,8 @@ class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDe
         setupCollectionView()
         
         setupActivityIndicator()
+        
+        setupSearchbar()
 
     }
     
@@ -73,7 +86,7 @@ class NewsCollectionViewController: UICollectionViewController, TRMosaicLayoutDe
 extension NewsCollectionViewController{
     
     private func setupNavigationBar() {
-        //- navigationbar
+
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = .systemBackground
         barAppearance.largeTitleTextAttributes = [.foregroundColor : UIColor.secondaryLabel]
@@ -84,7 +97,7 @@ extension NewsCollectionViewController{
     }
     
     private func setupCollectionView() {
-        //- collectionview
+
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
@@ -94,15 +107,32 @@ extension NewsCollectionViewController{
         mosaicLayout.delegate = self
         
         collectionView.register(UINib(nibName: CollectionUtility.cellUIName, bundle: nil), forCellWithReuseIdentifier: CollectionUtility.reuseID)
+        
     }
     
     private func setupActivityIndicator() {
-        //- activity indicator
+
         activityIndicator.color = .white
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    private func setupSearchbar(){
+        
+        searchController.searchResultsUpdater = self
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.becomeFirstResponder()
+
+        searchController.searchBar.placeholder = "Search News"
+
+        navigationItem.searchController = searchController
+
+        definesPresentationContext = true
     }
     
 }
@@ -111,21 +141,19 @@ extension NewsCollectionViewController{
 extension NewsCollectionViewController: UICollectionViewDelegateFlowLayout{
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return newsViewModel.news.count
+        return isFiltering ? newsViewModel.filteredNews.count : newsViewModel.news.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionUtility.reuseID, for: indexPath) as! NewsCollectionViewCell
         
-        let article = newsViewModel.news[indexPath.row]
+        let article = isFiltering ? newsViewModel.filteredNews[indexPath.row] : newsViewModel.news[indexPath.row]
         cell.setupCell(article.title, article.urlToImage)
         
         return cell
@@ -138,7 +166,8 @@ extension NewsCollectionViewController: UICollectionViewDelegateFlowLayout{
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let article = newsViewModel.news[indexPath.row]
+        
+        let article = isFiltering ? newsViewModel.filteredNews[indexPath.row] : newsViewModel.news[indexPath.row]
         if let url = URL(string: article.url) {
             UIApplication.shared.open(url)
         }
@@ -146,6 +175,48 @@ extension NewsCollectionViewController: UICollectionViewDelegateFlowLayout{
     
 }
 
+//MARK: Manage searchbar
+extension NewsCollectionViewController: UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(!(searchBar.text?.isEmpty)!){
+            
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+        }
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText.isEmpty){
+            
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+        }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        newsViewModel.filteredNews.removeAll(keepingCapacity: false)
+        
+        guard let searchText = searchController.searchBar.text else {
+            return
+        }
+
+        newsViewModel.filteredNews = newsViewModel.news.filter {
+            return $0.title .range(of: searchText) != nil
+        }
+
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        
+    }
+    
+}
+
+//MARK: Manage TRM Flow Layout
 extension NewsCollectionViewController {
     
     func collectionView(_ collectionView:UICollectionView, mosaicCellSizeTypeAtIndexPath indexPath:IndexPath) -> TRMosaicCellType {
@@ -162,7 +233,9 @@ extension NewsCollectionViewController {
 }
 
 
+
 private enum CollectionUtility {
     static let cellUIName = "NewsCollectionViewCell"
     static let reuseID = "newsCell"
+    static let headerID = "searchCollectionHeader"
 }
